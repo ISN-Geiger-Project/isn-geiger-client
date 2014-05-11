@@ -3,7 +3,10 @@ isn-geiger-client
 
 >>ISN Geiger client receiving analogic-to-numeric data written in Python
 
+>>NB : I'm using [PyScripter IDE])(https://code.google.com/p/pyscripter/)
+
 <h4>Structure :</h4>
+![Structure](http://www.hostingpics.net/thumbs/84/88/36/mini_848836packages.png)
 - backend: services writing/sending data
 - frontend: services reading/receiving data
 - serializable: objects that can be received or sent by communication services
