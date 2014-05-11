@@ -3,7 +3,7 @@ isn-geiger-client
 
 >>ISN Geiger client receiving analogic-to-numeric data written in Python
 
->>NB : I'm using [PyScripter IDE])(https://code.google.com/p/pyscripter/)
+>>NB : I'm using [PyScripter IDE](https://code.google.com/p/pyscripter/)
 
 <h4>Structure :</h4>
 ![Structure](http://www.hostingpics.net/thumbs/84/88/36/mini_848836packages.png)
@@ -28,7 +28,7 @@ if __name__ == '__main__':
 `````
 
 <h4>Python execution :</h4>
-`````shell
+`````bash
 ##default configFilePath = config.cfg
 python Main.py [configFilePath]
 `````
