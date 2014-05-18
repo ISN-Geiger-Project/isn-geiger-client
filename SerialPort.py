@@ -1,4 +1,4 @@
-import sys, threading, serial, time
+import sys, threading, serial, time, Constants
 from serial import *
 
 #-------------------------------------------------------------------------------
@@ -82,7 +82,7 @@ class SerialPort(serial.Serial):
 
         self.Handler = aHandler
         self.port = aPort
-        self.baudrate=9600
+        self.baudrate=Constants.SERIAL_PORT_BAUDRATE
         self.parity=serial.PARITY_NONE
         self.stopbits=serial.STOPBITS_ONE
         self.bytesize=serial.EIGHTBITS

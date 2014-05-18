@@ -1,0 +1,1 @@
+#Just used to set singletons and globals vars

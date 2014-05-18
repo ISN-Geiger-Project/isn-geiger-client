@@ -1,6 +1,6 @@
+import Constants
 from ISerializable import ISerializable
 from SQLiteReposService import SQLiteReposService
-from RemoteClientService import RemoteClientService
 from struct import *
 
 #-------------------------------------------------------------------------------
@@ -14,16 +14,29 @@ from struct import *
 #------------------------------------------------------------------------------
 
 class HitEntity(ISerializable):
-    def __init__(self, timestamp, count):
+    def set(self, timestamp, count):
         self.timestamp = timestamp
         self.count = count
+        return self
 
     def __init__(self):
         pass
 
-    def serializeObject(self, target):
-        if(target is SQLiteReposService):
-            target.newCursor().executemany('INSERT INTO hits VALUES (?, ?)', [(self.timestamp, self.count)])
-        elif(target is RemoteClientService):
-            target.send(pack('bii', 0x01, self.timestamp, self.count))
+    def serialize(self, target):
+        if isinstance(target, SQLiteReposService):
+            target.newCursor().executemany('INSERT INTO '+target.getTableName()+' VALUES (?, ?)', [(self.timestamp, self.count)])
+        elif isinstance(target, RemoteClientService):
+            target.send(pack('!bii', Constants.PACKET_RECV_HIT, self.timestamp, self.count))
         pass
+
+    def deserialize(self, data):
+        if isinstance(data, bytearray):
+            self.timestamp, self.count = unpack('!ii', data)
+##        elif isinstance(data, sqlite3.Row):
+##
+##            pass
+##        elif isinstance(data, str):
+##            if(str.startswith(Constants.SERIAL_MESSAGE_HEAD)):
+##                self.timestamp = int(time.time())
+##                self.count = int(Data[Constants.SERIAL_MESSAGE_HEAD:])
+        return self

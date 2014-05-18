@@ -1,5 +1,4 @@
-import asyncore
-import socket
+import asyncore, socket, Constants
 #-------------------------------------------------------------------------------
 # Class Name:        NetConnector
 # Purpose:           Used to communicate with an async socket managed by events
@@ -13,13 +12,13 @@ class NetConnector(asyncore.dispatcher_with_send):
 
     def __init__(self, aHandler):
         self.Handler = aHandler
-        self.buffer_size = 1024
-        asyncore.dispatcher.__init__(self)
+        self.buffer_size = Constants.DEFAULT_BUFFER_SIZE
+        asyncore.dispatcher_with_send.__init__(self)
         self.create_socket(socket.AF_INET, socket.SOCK_STREAM)
         self.set_reuse_addr()
         pass
 
-    def connect(self, host, port, buffer_size=1024):
+    def connectAsync(self, host, port, buffer_size=Constants.DEFAULT_BUFFER_SIZE):
         self.buffer_size = buffer_size
         self.connect((host, port))
         pass
@@ -32,12 +31,11 @@ class NetConnector(asyncore.dispatcher_with_send):
         try:
             data = bytearray(self.recv(self.buffer_size))
             self.Handler.packet_received(data)
-        except:
+        except Exception as e:
             pass
 
     def handle_close(self):
         self.Handler.connection_closed()
-        self.close()
         pass
 pass
 

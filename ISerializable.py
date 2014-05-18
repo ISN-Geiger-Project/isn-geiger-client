@@ -11,5 +11,9 @@
 class ISerializable:
      def __init__(self):
         pass
-     def serializeObject(self, target):
+
+     def deserialize(self, data):
+        pass
+
+     def serialize(self, target):
         pass
